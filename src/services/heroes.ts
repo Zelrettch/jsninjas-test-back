@@ -23,6 +23,11 @@ export const getHeroes = async (page: number) => {
     prisma.superhero.findMany({
       skip: (page - 1) * PAGE_SIZE,
       take: PAGE_SIZE,
+      select: {
+        id: true,
+        nickname: true,
+        thumbnailName: true,
+      },
     }),
     prisma.superhero.count(),
   ]);
