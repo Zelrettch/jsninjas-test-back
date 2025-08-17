@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = env("PRISMA_OUTPUT_DIR")
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Superhero {
+  id                 Int      @id @default(autoincrement())
+  nickname           String
+  real_name          String
+  origin_description String
+  superpowers        String
+  catch_phrase       String
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  images             Image[]  @relation("Images")
+  thumbnail          Image?   @relation("Thumbnail", fields: [thumbnailName], references: [name])
+  thumbnailName      String?  @unique
+}
+
+model Image {
+  name         String     @id @unique
+  superhero    Superhero? @relation("Images", fields: [superheroId], references: [id], onDelete: Cascade)
+  superheroId  Int?
+  thumbnailFor Superhero? @relation("Thumbnail")
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
