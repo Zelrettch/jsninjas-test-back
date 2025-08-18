@@ -143,3 +143,4 @@ temp/*
 !temp/.gitkeep
 uploads/*
 !uploads/.gitkeep
+!uploads/no_image.png
